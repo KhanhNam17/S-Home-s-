@@ -1,0 +1,25 @@
+# S:HOMEs v1.0: fill locally; this contains no real credentials.
+APP_ENV=local
+PORT=3001
+APP_ORIGIN=http://localhost:5173
+DATABASE_URL=postgresql://shomes:CHANGE_ME@localhost:5432/shomes_demo
+CSRF_SECRET=REPLACE_WITH_RANDOM_32_BYTES_OR_MORE
+COOKIE_SECURE=false
+TRUST_PROXY=loopback
+UPLOAD_DIR=/data/shomes/uploads
+AI_MODE=rule
+AI_FALLBACK_ENABLED=true
+OPENAI_API_KEY=
+OPENAI_MODEL=
+AI_DAILY_REQUEST_LIMIT=200
+TRAVEL_PROVIDER=fixture
+OSRM_BASE_URL=
+TRAVEL_CACHE_TTL_SECONDS=86400
+DEMO_ADMIN_PASSWORD=
+DEMO_OWNER_A_PASSWORD=
+DEMO_OWNER_B_PASSWORD=
+# FE variables: public values only.
+VITE_API_BASE_URL=/api/v1
+VITE_DATA_MODE=api
+VITE_MAP_STYLE_URL=
+# API keys that grant server privileges must NEVER have VITE_ prefix.

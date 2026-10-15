@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary-fixed":"#111c2d","on-surface-variant":"#5c3f40","on-secondary":"#ffffff","inverse-surface":"#283044","on-secondary-fixed":"#341100","secondary-container":"#fd761a","on-background":"#131b2e","secondary-fixed":"#ffdbca","primary-fixed":"#ffdada","on-tertiary-fixed-variant":"#3c475a","on-secondary-fixed-variant":"#783200","primary-container":"#e11d48","on-primary-container":"#fffaf9","inverse-on-surface":"#eef0ff","surface-variant":"#dae2fd","on-tertiary-container":"#fbfaff","tertiary-fixed-dim":"#bcc7de","secondary":"#9d4300","on-primary":"#ffffff","error-container":"#ffdad6","primary":"#b80035","surface-container-low":"#f2f3ff","surface-container-highest":"#dae2fd","surface-container-high":"#e2e7ff","on-primary-fixed":"#40000c","on-secondary-container":"#5c2400","on-surface":"#131b2e","surface-bright":"#faf8ff","inverse-primary":"#ffb3b6","outline-variant":"#e5bdbe","primary-fixed-dim":"#ffb3b6","surface-container-lowest":"#ffffff","surface-dim":"#d2d9f4","tertiary-container":"#697489","secondary-fixed-dim":"#ffb690","outline":"#906f70","on-primary-fixed-variant":"#920028","background":"#faf8ff","on-error-container":"#93000a","surface-tint":"#be0037","surface-container":"#eaedff","tertiary":"#505b70","tertiary-fixed":"#d8e3fb","surface":"#faf8ff","on-tertiary":"#ffffff","error":"#ba1a1a","on-error":"#ffffff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"margin":"2rem","margin-mobile":"1rem","space-xs":"0.25rem","space-xl":"2.5rem","space-sm":"0.5rem","space-lg":"1.5rem","gutter-mobile":"1rem","space-md":"1rem","gutter":"1.5rem"},"fontFamily":{"headline-sm":["Space Grotesk"],"headline-lg":["Space Grotesk"],"headline-xl":["Space Grotesk"],"body-xl":["Plus Jakarta Sans"],"label-sm":["Space Grotesk"],"body-sm":["Plus Jakarta Sans"],"display-lg-mobile":["Space Grotesk"],"headline-xl-mobile":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"display-lg":["Space Grotesk"],"label-lg":["Space Grotesk"],"headline-md":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"label-md":["Space Grotesk"],"headline-lg-mobile":["Space Grotesk"]},"fontSize":{"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-xl":["18px",{"lineHeight":"28px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.05em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"display-lg-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.01em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"display-lg":["56px",{"lineHeight":"64px","letterSpacing":"-0.03em","fontWeight":"700"}],"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.03em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}}</script><title>S:HOMEs • Đăng tin — bước biểu phí • UI Demo</title><link rel="stylesheet" href="assets/navigation.css"/></head><body class="bg-surface text-on-surface font-body-md text-body-md"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center text-on-primary-container shadow-[0_10px_25px_-5px_rgba(225,29,72,0.3)]"><span class="material-symbols-outlined text-[22px]">apartment</span></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">S:HOMEs</span><span class="px-1.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">RED</span></div><span class="font-label-sm text-label-sm text-outline tracking-wider uppercase">Energy Edition</span></div></div><div class="mx-space-md mb-space-md p-space-sm bg-surface-container-lowest rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] flex items-center gap-space-sm"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[20px]">admin_panel_settings</span></div><div class="flex flex-col overflow-hidden"><span class="font-label-md text-label-md text-on-surface truncate">Nguyễn Thành Nam</span><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary-container"></span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Quản trị viên / Chủ trọ</span></div></div></div><nav class="px-space-md flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-label-lg shadow-[0_10px_25px_-5px_rgba(225,29,72,0.2)]"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="tong-quan" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-label-lg text-label-lg">Tổng quan</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="danh-sach-phong" href="#"><span class="material-symbols-outlined text-[20px]">meeting_room</span><span class="font-label-lg text-label-lg">Danh sách phòng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="kiem-duyet-tin" href="#"><span class="material-symbols-outlined text-[20px]">verified</span><span class="font-label-lg text-label-lg">Kiểm duyệt tin</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="lich-hen-xem-phong" href="#"><span class="material-symbols-outlined text-[20px]">calendar_month</span><span class="font-label-lg text-label-lg">Lịch hẹn xem phòng</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="dang-phong-moi" href="#"><span class="material-symbols-outlined text-[20px]">add_circle</span><span class="font-label-lg text-label-lg">Đăng phòng mới</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="danh-sach-chu-tro" href="#"><span class="material-symbols-outlined text-[20px]">real_estate_agent</span><span class="font-label-lg text-label-lg">Danh sách chủ trọ</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="cai-dat-he-thong" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span class="font-label-lg text-label-lg">Cài đặt hệ thống</span></a></nav></div><div class="p-space-md flex flex-col gap-space-sm"><a class="w-full flex items-center justify-center gap-space-sm px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-all shadow-[0_1px_3px_0_rgba(15,23,42,0.04)]" data-path="trang-khach-xem" href="#"><span class="material-symbols-outlined text-[18px]">open_in_new</span><span class="font-label-lg text-label-lg">Về trang khách xem</span></a><div class="flex items-center justify-between px-space-xs text-on-surface-variant"><span class="font-label-sm text-label-sm">v2.4.0 • Red Energy</span><span class="w-2 h-2 rounded-full bg-secondary-container"></span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container-lowest px-2 py-1 rounded-full shadow-[0_1px_2px_-1px_rgba(15,23,42,0.02)]"><span class="material-symbols-outlined text-primary text-[18px]">tune</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider pl-1">Role:</span><button class="px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm shadow-[0_1px_2px_rgba(0,0,0,0.05)]" type="button">Chủ trọ</button><button class="px-2.5 py-1 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors" type="button">Super Admin</button></div><button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[16px] text-secondary">restart_alt</span><span class="font-label-sm text-label-sm">Reset Mock Data</span></button></div><div class="flex items-center gap-space-md"><button class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 bg-primary-container rounded-full"></span></button><button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help_outline</span></button><div class="h-6 w-[1px] bg-outline-variant/30"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-[0_10px_25px_-5px_rgba(225,29,72,0.3)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden xl:flex flex-col items-start"><span class="font-label-md text-label-md text-on-surface leading-tight">Quản Lý Vận Hành</span><span class="font-body-sm text-body-sm text-on-surface-variant">admin@shomes.vn</span></div></div></div></header><main class="w-full pt-16 bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full">
+<!-- Top Greeting & Context Strip -->
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-space-lg gap-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<span>Chủ trọ</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold">Đăng tin phòng mới</span>
+</div>
+<div class="flex items-center gap-space-sm pt-1">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Kê khai biểu phí &amp; Chi phí cố định</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm uppercase">Bước 3/4</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Xin chào <strong class="text-on-surface font-semibold">Nguyễn Văn An (Chủ trọ A)</strong>, thiết lập bảng giá minh bạch giúp tin đăng tăng 65% tỷ lệ chốt cọc từ sinh viên &amp; người đi làm trẻ.
+      </p>
+</div>
+<!-- Quick Status Pill -->
+<div class="flex items-center gap-space-sm bg-surface-container-lowest px-space-md py-2.5 rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] shrink-0 self-start md:self-auto">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Tiêu chuẩn S:HOMEs ClearPrice</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Không phát sinh phụ phí ẩn</span>
+</div>
+</div>
+</div>
+<!-- Stepper Navigation Bar -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] mb-space-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md relative">
+<!-- Step 1: Completed -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low transition-all">
+<div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-emerald-700 uppercase">Bước 1 • Đã xong</span>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Thông tin cơ bản</span>
+</div>
+</div>
+<!-- Step 2: Completed -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low transition-all">
+<div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-emerald-700 uppercase">Bước 2 • Đã xong</span>
+<span class="font-label-lg text-label-lg text-on-surface truncate">Vị trí &amp; Tiện ích</span>
+</div>
+</div>
+<!-- Step 3: Active (Crimson Red Energy) -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-primary text-on-primary shadow-[0_10px_25px_-5px_rgba(225,29,72,0.25)]">
+<div class="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center font-headline-sm text-headline-sm shadow-sm shrink-0">
+          3
+        </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-wider">Đang thực hiện</span>
+<span class="font-label-lg text-label-lg text-on-primary font-bold truncate">Biểu phí &amp; Giá thuê</span>
+</div>
+</div>
+<!-- Step 4: Pending -->
+<div class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container-low/60 opacity-60">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-md text-label-md shrink-0">
+          4
+        </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Chờ xử lý</span>
+<span class="font-label-lg text-label-lg text-on-surface-variant truncate">Hình ảnh &amp; Xem trước</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Split Canvas: Left Form Fields / Right Live Simulator -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- LEFT: Inputs & Fee Configuration (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Section: Tiền thuê & Tiền cọc (Primary Financial Pillar) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">payments</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Tiền phòng &amp; Tiền cọc cam kết</h2>
+</div>
+<span class="font-label-sm text-label-sm text-primary bg-primary-fixed px-2 py-0.5 rounded-full">Bắt buộc</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Room Rent -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface" for="input-rent">
+              Tiền thuê niêm yết (VNĐ/tháng) <span class="text-primary">*</span>
+</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-low text-on-surface font-headline-sm text-headline-sm px-space-md py-3 rounded-lg focus:outline-none focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all text-left" id="input-rent" inputmode="numeric" type="text" value="3.200.000"/>
+<span class="absolute right-space-md font-label-md text-label-md text-on-surface-variant">đ / tháng</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-emerald-600">trending_up</span>
+              Mức giá đề xuất khu vực: 3.000.000 - 3.500.000 đ
+            </span>
+</div>
+<!-- Deposit -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface" for="input-deposit">
+              Tiền cọc giữ phòng <span class="text-primary">*</span>
+</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-low text-on-surface font-headline-sm text-headline-sm px-space-md py-3 rounded-lg focus:outline-none focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all text-left" id="input-deposit" inputmode="numeric" type="text" value="3.000.000"/>
+<span class="absolute right-space-md font-label-md text-label-md text-on-surface-variant">đ (1 lần)</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">info</span>
+              Tách biệt hợp đồng, hoàn lại 100% khi trả phòng đúng cam kết
+            </span>
+</div>
+</div>
+</div>
+<!-- Section: Điện & Nước (Utility Metering) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] flex flex-col gap-space-md">
+<div class="flex items-center gap-space-xs pb-space-xs">
+<span class="material-symbols-outlined text-secondary text-[24px]">bolt</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Chi phí Điện &amp; Nước sinh hoạt</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Electricity -->
+<div class="flex flex-col gap-2 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Điện sinh hoạt
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Đồng hồ riêng</span>
+</div>
+<div class="relative flex items-center">
+<input class="w-full bg-white text-on-surface font-headline-sm text-headline-sm px-space-md py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20" id="input-elec" inputmode="numeric" type="text" value="3.800"/>
+<span class="absolute right-3 font-label-md text-label-md text-on-surface-variant">đ / kWh</span>
+</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">speed</span>
+              Chốt số điện ngày 30 hàng tháng qua ảnh chụp công tơ
+            </div>
+</div>
+<!-- Water -->
+<div class="flex flex-col gap-2 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-cyan-600"></span> Nước sinh hoạt
+              </span>
+<div class="flex items-center gap-1 bg-white p-0.5 rounded-md">
+<button class="px-2 py-0.5 rounded font-label-sm text-label-sm bg-primary text-on-primary" id="water-mode-person" type="button">Người</button>
+<button class="px-2 py-0.5 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface" id="water-mode-m3" type="button">m³</button>
+</div>
+</div>
+<div class="relative flex items-center">
+<input class="w-full bg-white text-on-surface font-headline-sm text-headline-sm px-space-md py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20" id="input-water" inputmode="numeric" type="text" value="100.000"/>
+<span class="absolute right-3 font-label-md text-label-md text-on-surface-variant" id="water-unit-label">đ / người</span>
+</div>
+<div class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">water_drop</span>
+              Nước máy thành phố, có hệ thống lọc thô đầu nguồn
+            </div>
+</div>
+</div>
+</div>
+<!-- Section: Dịch vụ & Phụ phí tiện ích -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] flex flex-col gap-space-md">
+<div class="flex items-center gap-space-xs pb-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">wifi</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Dịch vụ, Gửi xe &amp; Quản trị tòa nhà</h2>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Internet Item with Free Toggle -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-space-md rounded-lg bg-surface-container-low gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">router</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Internet / Wifi Mesh tốc độ cao</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Băng thông 500Mbps, phát riêng từng tầng</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant cursor-pointer" for="toggle-wifi-free">Miễn phí</label>
+<input class="w-4 h-4 accent-primary rounded cursor-pointer" id="toggle-wifi-free" type="checkbox"/>
+</div>
+<div class="relative w-36">
+<input class="w-full bg-white text-on-surface font-label-lg text-label-lg px-3 py-2 rounded-lg text-right pr-16 focus:outline-none focus:ring-2 focus:ring-primary/20" id="input-wifi" type="text" value="100.000"/>
+<span class="absolute right-2 top-2 font-body-sm text-body-sm text-on-surface-variant">đ/phòng</span>
+</div>
+</div>
+</div>
+<!-- Parking Fee -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-space-md rounded-lg bg-surface-container-low gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">two_wheeler</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Gửi xe máy trong nhà</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Cổng khóa vân tay + Camera giám sát 24/7</span>
+</div>
+</div>
+<div class="relative w-36">
+<input class="w-full bg-white text-on-surface font-label-lg text-label-lg px-3 py-2 rounded-lg text-right pr-14 focus:outline-none focus:ring-2 focus:ring-primary/20" id="input-parking" type="text" value="100.000"/>
+<span class="absolute right-2 top-2 font-body-sm text-body-sm text-on-surface-variant">đ/xe</span>
+</div>
+</div>
+<!-- General Building Operations Fee -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-space-md rounded-lg bg-surface-container-low gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">cleaning_services</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Combo Dịch vụ chung tòa nhà</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Vệ sinh hành lang 3 lần/tuần, thang máy, đổ rác</span>
+</div>
+</div>
+<div class="relative w-36">
+<input class="w-full bg-white text-on-surface font-label-lg text-label-lg px-3 py-2 rounded-lg text-right pr-16 focus:outline-none focus:ring-2 focus:ring-primary/20" id="input-service" type="text" value="150.000"/>
+<span class="absolute right-2 top-2 font-body-sm text-body-sm text-on-surface-variant">đ/phòng</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT: Dynamic Estimate Calculator Card (Sticky Panel 5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md sticky top-20">
+<!-- Live Calculation Card (M06 Prototype) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_10px_25px_-5px_rgba(225,29,72,0.08)] flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Khung xem trước ước tính (M06)</span>
+</div>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Khách xem sẽ thấy</span>
+</div>
+<!-- Property Mini Snapshot -->
+<div class="flex gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<img class="w-16 h-16 rounded-md object-cover shrink-0" data-alt="Modern studio apartment room in Hanoi with large sunlit window, minimalist wooden desk, warm crimson accent cushions, wooden floor, cozy indoor plants, photorealistic interior photography 4k" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKVIr6hj8KIF7YVO_A_ThzYH71ahGkw8WPrmxqedX4hiOoBDiuJ9M9i7iG8GVzdMPC2_PH4XJRvOcJiGgNlaMvTY6VdQfxwHFbXvMNRoPyOG8kQoGbNRFiP0H8ZkSNvDh7PmFc9djyzytis4isehA-5x5XOE_IogkFXkSQT2RUEg3-3nRvC3HfJ0eTgGm_yNu2b-C99T0xgHUM_4uQwrZ5f_4Cc9_9sqHxP3djqks4GSzlfL1XVMaccg"/>
+<div class="flex flex-col justify-center min-w-0">
+<span class="font-label-lg text-label-lg text-on-surface truncate">Studio Ban Công Thoáng • Cầu Giấy</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Phòng 302 • Diện tích 28m²</span>
+</div>
+</div>
+<!-- Simulator Configuration Sliders -->
+<div class="flex flex-col gap-space-sm py-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Giả lập kịch bản người thuê</span>
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Số người</span>
+<span class="font-headline-sm text-headline-sm text-on-surface" id="sim-person-count">1</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Xe máy</span>
+<span class="font-headline-sm text-headline-sm text-on-surface" id="sim-bike-count">1</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-low">
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Điện tiêu thụ</span>
+<span class="font-headline-sm text-headline-sm text-on-surface" id="sim-kwh-count">80 <span class="font-body-sm text-body-sm font-normal">kWh</span></span>
+</div>
+</div>
+</div>
+<!-- Detailed Cost Breakdown -->
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex items-center justify-between text-body-md font-body-md">
+<span class="text-on-surface-variant">Tiền phòng gốc:</span>
+<span class="font-label-lg text-label-lg text-on-surface" id="breakdown-rent">3.200.000 đ</span>
+</div>
+<div class="flex items-center justify-between text-body-md font-body-md">
+<span class="text-on-surface-variant">Điện (80 kWh x 3.800 đ):</span>
+<span class="font-label-lg text-label-lg text-on-surface" id="breakdown-elec">304.000 đ</span>
+</div>
+<div class="flex items-center justify-between text-body-md font-body-md">
+<span class="text-on-surface-variant">Nước (1 người):</span>
+<span class="font-label-lg text-label-lg text-on-surface" id="breakdown-water">100.000 đ</span>
+</div>
+<div class="flex items-center justify-between text-body-md font-body-md">
+<span class="text-on-surface-variant">Internet / Wifi:</span>
+<span class="font-label-lg text-label-lg text-on-surface" id="breakdown-wifi">100.000 đ</span>
+</div>
+<div class="flex items-center justify-between text-body-md font-body-md">
+<span class="text-on-surface-variant">Gửi xe (1 xe):</span>
+<span class="font-label-lg text-label-lg text-on-surface" id="breakdown-parking">100.000 đ</span>
+</div>
+<div class="flex items-center justify-between text-body-md font-body-md">
+<span class="text-on-surface-variant">Phí dịch vụ chung:</span>
+<span class="font-label-lg text-label-lg text-on-surface" id="breakdown-service">150.000 đ</span>
+</div>
+<!-- Total Highlight Box -->
+<div class="mt-space-sm p-space-md rounded-xl bg-surface-container-high flex flex-col gap-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Ước tính tổng chi phí hàng tháng</span>
+<div class="flex items-baseline justify-between">
+<span class="font-headline-xl text-headline-xl text-primary font-bold" id="total-monthly-amount">
+                3.954.000 đ
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">/ tháng</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Khoản cọc một lần lúc vào:</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold" id="breakdown-deposit">3.000.000 đ</span>
+</div>
+</div>
+</div>
+<!-- Trust & Compliance Badge -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-emerald-600">security</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Giá hiển thị tự động trên trang chi tiết sẽ bao gồm huy hiệu <strong class="text-on-surface">"Cam kết minh bạch giá"</strong> từ S:HOMEs.
+          </p>
+</div>
+</div>
+<!-- Quick Guidance Accordion Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+<span class="font-label-lg text-label-lg text-on-surface">Mẹo định giá từ chuyên gia</span>
+</div>
+<ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface-variant pl-4 list-disc">
+<li>Cân nhắc miễn phí Wifi để tin phòng cạnh tranh hơn 30% so với khu vực lân cận.</li>
+<li>Giữ tiền cọc tương đương 1 tháng tiền nhà để sinh viên dễ dàng đưa ra quyết định đặt phòng sớm.</li>
+<li>Ghi rõ công tơ riêng để tránh mâu thuẫn tranh chấp hóa đơn điện nước sau này.</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation & Action Bar -->
+<div class="mt-space-xl p-space-md bg-surface-container-lowest rounded-xl shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<!-- Back to Step 2 -->
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-3 rounded-lg bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Quay lại Bước 2: Vị trí &amp; Tiện ích</span>
+</a>
+<!-- Action Buttons Right -->
+<div class="w-full sm:w-auto flex flex-col sm:flex-row items-center gap-space-sm">
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-md py-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+<span>Lưu bản nháp (Draft)</span>
+</button>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-xl py-3 rounded-lg bg-primary hover:bg-[#a1002f] text-on-primary font-label-lg text-label-lg shadow-[0_10px_25px_-5px_rgba(225,29,72,0.3)] transition-all" href="#">
+<span>Tiếp tục Bước 4: Tải ảnh &amp; Xem trước</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Interactive Dynamic Cost Script -->
+<script>
+    (function initCostCalculator() {
+      const rentInput = document.getElementById('input-rent');
+      const depositInput = document.getElementById('input-deposit');
+      const elecInput = document.getElementById('input-elec');
+      const waterInput = document.getElementById('input-water');
+      const wifiInput = document.getElementById('input-wifi');
+      const parkingInput = document.getElementById('input-parking');
+      const serviceInput = document.getElementById('input-service');
+      const wifiFreeToggle = document.getElementById('toggle-wifi-free');
+
+      const breakdownRent = document.getElementById('breakdown-rent');
+      const breakdownElec = document.getElementById('breakdown-elec');
+      const breakdownWater = document.getElementById('breakdown-water');
+      const breakdownWifi = document.getElementById('breakdown-wifi');
+      const breakdownParking = document.getElementById('breakdown-parking');
+      const breakdownService = document.getElementById('breakdown-service');
+      const breakdownDeposit = document.getElementById('breakdown-deposit');
+      const totalDisplay = document.getElementById('total-monthly-amount');
+
+      function parseMoney(val) {
+        if (!val) return 0;
+        const clean = val.toString().replace(/[^0-9]/g, '');
+        return parseInt(clean, 10) || 0;
+      }
+
+      function formatMoney(num) {
+        return num.toLocaleString('vi-VN') + ' đ';
+      }
+
+      function updateCalculator() {
+        const rent = parseMoney(rentInput.value);
+        const deposit = parseMoney(depositInput.value);
+        const elecPrice = parseMoney(elecInput.value);
+        const waterPrice = parseMoney(waterInput.value);
+        const parkingPrice = parseMoney(parkingInput.value);
+        const servicePrice = parseMoney(serviceInput.value);
+        
+        let wifiPrice = parseMoney(wifiInput.value);
+        if (wifiFreeToggle.checked) {
+          wifiPrice = 0;
+          wifiInput.disabled = true;
+          wifiInput.classList.add('opacity-50');
+        } else {
+          wifiInput.disabled = false;
+          wifiInput.classList.remove('opacity-50');
+        }
+
+        const elecTotal = elecPrice * 80;
+        const waterTotal = waterPrice * 1;
+        const monthlyTotal = rent + elecTotal + waterTotal + wifiPrice + parkingPrice + servicePrice;
+
+        // Render breakdowns
+        breakdownRent.textContent = formatMoney(rent);
+        breakdownElec.textContent = formatMoney(elecTotal);
+        breakdownWater.textContent = formatMoney(waterTotal);
+        breakdownWifi.textContent = wifiPrice === 0 ? 'Miễn phí' : formatMoney(wifiPrice);
+        breakdownParking.textContent = formatMoney(parkingPrice);
+        breakdownService.textContent = formatMoney(servicePrice);
+        breakdownDeposit.textContent = formatMoney(deposit);
+        totalDisplay.textContent = formatMoney(monthlyTotal);
+      }
+
+      // Input Formatting & Listening
+      const moneyInputs = [rentInput, depositInput, elecInput, waterInput, wifiInput, parkingInput, serviceInput];
+      moneyInputs.forEach(input => {
+        if (!input) return;
+        input.addEventListener('input', (e) => {
+          const raw = parseMoney(e.target.value);
+          e.target.value = raw > 0 ? raw.toLocaleString('vi-VN') : '';
+          updateCalculator();
+        });
+      });
+
+      if (wifiFreeToggle) {
+        wifiFreeToggle.addEventListener('change', updateCalculator);
+      }
+
+      // Water Mode Switch Micro-interaction
+      const waterModePerson = document.getElementById('water-mode-person');
+      const waterModeM3 = document.getElementById('water-mode-m3');
+      const waterUnitLabel = document.getElementById('water-unit-label');
+
+      if (waterModePerson && waterModeM3) {
+        waterModePerson.addEventListener('click', () => {
+          waterModePerson.className = 'px-2 py-0.5 rounded font-label-sm text-label-sm bg-primary text-on-primary';
+          waterModeM3.className = 'px-2 py-0.5 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface';
+          waterInput.value = '100.000';
+          waterUnitLabel.textContent = 'đ / người';
+          updateCalculator();
+        });
+
+        waterModeM3.addEventListener('click', () => {
+          waterModeM3.className = 'px-2 py-0.5 rounded font-label-sm text-label-sm bg-primary text-on-primary';
+          waterModePerson.className = 'px-2 py-0.5 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface';
+          waterInput.value = '30.000';
+          waterUnitLabel.textContent = 'đ / m³';
+          updateCalculator();
+        });
+      }
+
+      // Initial run
+      updateCalculator();
+    })();
+  </script>
+</div></main></div><script src="assets/pages.js"></script><script src="assets/navigation.js"></script></body></html>

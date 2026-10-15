@@ -1,0 +1,210 @@
+{
+  "title": "RentalIntentPatch",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "intent": {
+      "type": "string",
+      "enum": [
+        "search",
+        "refine",
+        "off_topic"
+      ]
+    },
+    "set": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "budgetType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "rent",
+            "total",
+            null
+          ]
+        },
+        "maxPriceVnd": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1000000000
+        },
+        "areaCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "destinationQuery": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "maxTravelMinutes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 180
+        },
+        "occupants": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 10
+        },
+        "vehicles": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 10
+        },
+        "electricityKwh": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 2000
+        },
+        "sort": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "newest",
+            "rent_asc",
+            "total_asc",
+            "area_desc",
+            "travel_asc",
+            null
+          ]
+        }
+      },
+      "required": [
+        "budgetType",
+        "maxPriceVnd",
+        "areaCode",
+        "destinationQuery",
+        "maxTravelMinutes",
+        "occupants",
+        "vehicles",
+        "electricityKwh",
+        "sort"
+      ]
+    },
+    "clearFields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "budgetType",
+          "maxPriceVnd",
+          "areaCode",
+          "destinationQuery",
+          "maxTravelMinutes",
+          "occupants",
+          "vehicles",
+          "electricityKwh",
+          "sort"
+        ]
+      }
+    },
+    "addMustAmenities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "private_bathroom",
+          "kitchen",
+          "parking",
+          "air_conditioner",
+          "balcony",
+          "pets_allowed",
+          "flexible_hours"
+        ]
+      }
+    },
+    "removeMustAmenities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "private_bathroom",
+          "kitchen",
+          "parking",
+          "air_conditioner",
+          "balcony",
+          "pets_allowed",
+          "flexible_hours"
+        ]
+      }
+    },
+    "addPreferredAmenities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "private_bathroom",
+          "kitchen",
+          "parking",
+          "air_conditioner",
+          "balcony",
+          "pets_allowed",
+          "flexible_hours"
+        ]
+      }
+    },
+    "removePreferredAmenities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "private_bathroom",
+          "kitchen",
+          "parking",
+          "air_conditioner",
+          "balcony",
+          "pets_allowed",
+          "flexible_hours"
+        ]
+      }
+    },
+    "missingFields": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "type": "string",
+        "enum": [
+          "budgetType",
+          "destination",
+          "areaCode",
+          "maxTravelMinutes",
+          "occupants"
+        ]
+      }
+    }
+  },
+  "required": [
+    "intent",
+    "set",
+    "clearFields",
+    "addMustAmenities",
+    "removeMustAmenities",
+    "addPreferredAmenities",
+    "removePreferredAmenities",
+    "missingFields"
+  ]
+}

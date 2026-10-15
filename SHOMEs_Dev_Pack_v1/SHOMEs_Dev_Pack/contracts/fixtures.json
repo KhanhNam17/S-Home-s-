@@ -1,0 +1,1054 @@
+{
+  "meta": {
+    "schemaVersion": "1.0.0",
+    "synthetic": true,
+    "format": "seed input, not API response",
+    "coordinates": "illustrative, not verified addresses",
+    "images": "Provide permitted demo WebP assets matching sourceFile; these image files are not included.",
+    "times": "Resolve offsets against seed execution time in UTC"
+  },
+  "users": [
+    {
+      "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa0",
+      "email": "admin@shomes.test",
+      "role": "admin",
+      "displayName": "Admin Demo",
+      "passwordEnv": "DEMO_ADMIN_PASSWORD"
+    },
+    {
+      "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "email": "owner.a@shomes.test",
+      "role": "owner",
+      "displayName": "Chủ trọ A (demo)",
+      "phone": "+84900000000",
+      "passwordEnv": "DEMO_OWNER_A_PASSWORD"
+    },
+    {
+      "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "email": "owner.b@shomes.test",
+      "role": "owner",
+      "displayName": "Chủ trọ B (demo)",
+      "phone": "+84900000001",
+      "passwordEnv": "DEMO_OWNER_B_PASSWORD"
+    }
+  ],
+  "areas": [
+    {
+      "code": "hoa-lac",
+      "name": "Hòa Lạc",
+      "active": true
+    },
+    {
+      "code": "cau-giay-my-dinh",
+      "name": "Cầu Giấy – Mỹ Đình",
+      "active": true
+    },
+    {
+      "code": "thanh-xuan-ha-dong",
+      "name": "Thanh Xuân – Hà Đông",
+      "active": true
+    },
+    {
+      "code": "dong-da-hai-ba-trung",
+      "name": "Đống Đa – Hai Bà Trưng",
+      "active": true
+    },
+    {
+      "code": "ba-dinh-hoan-kiem-tay-ho",
+      "name": "Ba Đình – Hoàn Kiếm – Tây Hồ",
+      "active": true
+    },
+    {
+      "code": "long-bien-gia-lam",
+      "name": "Long Biên – Gia Lâm",
+      "active": true
+    },
+    {
+      "code": "khac-ha-noi",
+      "name": "Khu vực khác tại Hà Nội",
+      "active": true
+    }
+  ],
+  "amenities": [
+    {
+      "code": "private_bathroom",
+      "label": "Vệ sinh riêng"
+    },
+    {
+      "code": "kitchen",
+      "label": "Chỗ nấu ăn"
+    },
+    {
+      "code": "parking",
+      "label": "Chỗ để xe"
+    },
+    {
+      "code": "air_conditioner",
+      "label": "Điều hòa"
+    },
+    {
+      "code": "balcony",
+      "label": "Ban công"
+    },
+    {
+      "code": "pets_allowed",
+      "label": "Cho nuôi thú cưng"
+    },
+    {
+      "code": "flexible_hours",
+      "label": "Giờ giấc linh hoạt"
+    }
+  ],
+  "places": [
+    {
+      "id": "22222222-2222-4222-8222-222222222221",
+      "name": "FPT Hòa Lạc — mốc minh họa",
+      "areaCode": "hoa-lac",
+      "latitude": 21.012,
+      "longitude": 105.529,
+      "isDemo": true,
+      "aliases": [
+        "FPT",
+        "FPT Hòa Lạc"
+      ]
+    },
+    {
+      "id": "22222222-2222-4222-8222-222222222222",
+      "name": "Điểm làm việc Cầu Giấy — minh họa",
+      "areaCode": "cau-giay-my-dinh",
+      "latitude": 21.035,
+      "longitude": 105.79,
+      "isDemo": true,
+      "aliases": [
+        "văn phòng Cầu Giấy"
+      ]
+    },
+    {
+      "id": "22222222-2222-4222-8222-222222222223",
+      "name": "Điểm đến Mỹ Đình — minh họa",
+      "areaCode": "cau-giay-my-dinh",
+      "latitude": 21.025,
+      "longitude": 105.775,
+      "isDemo": true,
+      "aliases": [
+        "Mỹ Đình"
+      ]
+    }
+  ],
+  "listings": [
+    {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-01 tại Hòa Lạc",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "hoa-lac",
+      "address": "Địa chỉ minh họa SH-01, khu vực Hòa Lạc, Hà Nội",
+      "latitude": 21.01,
+      "longitude": 105.528,
+      "areaM2": 20,
+      "maxOccupants": 2,
+      "rentVnd": 2000000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": true,
+        "balcony": true,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333331"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -1
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111112",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-02 tại Hòa Lạc",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "hoa-lac",
+      "address": "Địa chỉ minh họa SH-02, khu vực Hòa Lạc, Hà Nội",
+      "latitude": 21.01015,
+      "longitude": 105.52812,
+      "areaM2": 21,
+      "maxOccupants": 2,
+      "rentVnd": 2100000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": false,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333332"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -2
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111113",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-03 tại Hòa Lạc",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "hoa-lac",
+      "address": "Địa chỉ minh họa SH-03, khu vực Hòa Lạc, Hà Nội",
+      "latitude": 21.0103,
+      "longitude": 105.52824,
+      "areaM2": 22,
+      "maxOccupants": 2,
+      "rentVnd": 2200000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": true,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333333"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -3
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111114",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-04 tại Cầu Giấy – Mỹ Đình",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "cau-giay-my-dinh",
+      "address": "Địa chỉ minh họa SH-04, khu vực Cầu Giấy – Mỹ Đình, Hà Nội",
+      "latitude": 21.03345,
+      "longitude": 105.79236,
+      "areaM2": 23,
+      "maxOccupants": 3,
+      "rentVnd": 3500000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 0,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": false,
+        "balcony": true,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333334"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -4
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111115",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-05 tại Cầu Giấy – Mỹ Đình",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "cau-giay-my-dinh",
+      "address": "Địa chỉ minh họa SH-05, khu vực Cầu Giấy – Mỹ Đình, Hà Nội",
+      "latitude": 21.0336,
+      "longitude": 105.79248,
+      "areaM2": 24,
+      "maxOccupants": 3,
+      "rentVnd": 3700000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": true,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333335"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -5
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111116",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-06 tại Cầu Giấy – Mỹ Đình",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "cau-giay-my-dinh",
+      "address": "Địa chỉ minh họa SH-06, khu vực Cầu Giấy – Mỹ Đình, Hà Nội",
+      "latitude": 21.03375,
+      "longitude": 105.7926,
+      "areaM2": 25,
+      "maxOccupants": 3,
+      "rentVnd": 2900000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": false,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333336"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -6
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111117",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-07 tại Thanh Xuân – Hà Đông",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "thanh-xuan-ha-dong",
+      "address": "Địa chỉ minh họa SH-07, khu vực Thanh Xuân – Hà Đông, Hà Nội",
+      "latitude": 20.9959,
+      "longitude": 105.78072,
+      "areaM2": 26,
+      "maxOccupants": 3,
+      "rentVnd": 3100000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": true,
+        "balcony": true,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333337"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -7
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111118",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-08 tại Đống Đa – Hai Bà Trưng",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "dong-da-hai-ba-trung",
+      "address": "Địa chỉ minh họa SH-08, khu vực Đống Đa – Hai Bà Trưng, Hà Nội",
+      "latitude": 21.01305,
+      "longitude": 105.82384,
+      "areaM2": 27,
+      "maxOccupants": 3,
+      "rentVnd": 3300000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": null,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": false,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333338"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -8
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111119",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "moderationStatus": "approved",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-09 tại Ba Đình – Hoàn Kiếm – Tây Hồ",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "ba-dinh-hoan-kiem-tay-ho",
+      "address": "Địa chỉ minh họa SH-09, khu vực Ba Đình – Hoàn Kiếm – Tây Hồ, Hà Nội",
+      "latitude": 21.0612,
+      "longitude": 105.81596,
+      "areaM2": 28,
+      "maxOccupants": 3,
+      "rentVnd": 3500000,
+      "depositVnd": null,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": true,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333339"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -9
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111120",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "moderationStatus": "approved",
+      "availability": "rented",
+      "version": 1,
+      "title": "Phòng minh họa SH-10 tại Hòa Lạc",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "hoa-lac",
+      "address": "Địa chỉ minh họa SH-10, khu vực Hòa Lạc, Hà Nội",
+      "latitude": 21.01135,
+      "longitude": 105.52908,
+      "areaM2": 29,
+      "maxOccupants": 3,
+      "rentVnd": 3700000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": false,
+        "balcony": true,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333340"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -10
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111121",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "moderationStatus": "approved",
+      "availability": "rented",
+      "version": 1,
+      "title": "Phòng minh họa SH-11 tại Cầu Giấy – Mỹ Đình",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "cau-giay-my-dinh",
+      "address": "Địa chỉ minh họa SH-11, khu vực Cầu Giấy – Mỹ Đình, Hà Nội",
+      "latitude": 21.0345,
+      "longitude": 105.7932,
+      "areaM2": 30,
+      "maxOccupants": 3,
+      "rentVnd": 2900000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": true,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333341"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -11
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111122",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "moderationStatus": "pending",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-12 tại Hòa Lạc",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "hoa-lac",
+      "address": "Địa chỉ minh họa SH-12, khu vực Hòa Lạc, Hà Nội",
+      "latitude": 21.01165,
+      "longitude": 105.52932,
+      "areaM2": 31,
+      "maxOccupants": 3,
+      "rentVnd": 3100000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": false,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333342"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -12
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111123",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "moderationStatus": "pending",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-13 tại Cầu Giấy – Mỹ Đình",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "cau-giay-my-dinh",
+      "address": "Địa chỉ minh họa SH-13, khu vực Cầu Giấy – Mỹ Đình, Hà Nội",
+      "latitude": 21.0348,
+      "longitude": 105.79344,
+      "areaM2": 32,
+      "maxOccupants": 3,
+      "rentVnd": 3300000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": true,
+        "balcony": true,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333343"
+      ],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -13
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111124",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "moderationStatus": "draft",
+      "availability": "available",
+      "version": 1,
+      "title": null,
+      "description": null,
+      "areaCode": "cau-giay-my-dinh",
+      "address": null,
+      "latitude": null,
+      "longitude": null,
+      "areaM2": null,
+      "maxOccupants": null,
+      "rentVnd": null,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": false,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [],
+      "moderationReason": null,
+      "availabilityUpdatedAtOffsetHours": -14
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111125",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "moderationStatus": "rejected",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-15 tại Thanh Xuân – Hà Đông",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "thanh-xuan-ha-dong",
+      "address": "Địa chỉ minh họa SH-15, khu vực Thanh Xuân – Hà Đông, Hà Nội",
+      "latitude": 20.9971,
+      "longitude": 105.78168,
+      "areaM2": 34,
+      "maxOccupants": 3,
+      "rentVnd": 3700000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": true,
+        "balcony": false,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333345"
+      ],
+      "moderationReason": "Cần bổ sung thông tin mô tả rõ hơn.",
+      "availabilityUpdatedAtOffsetHours": -15
+    },
+    {
+      "id": "11111111-1111-4111-8111-111111111126",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "moderationStatus": "hidden",
+      "availability": "available",
+      "version": 1,
+      "title": "Phòng minh họa SH-16 tại Hòa Lạc",
+      "description": "Phòng và thông tin dùng cho kiểm thử S:HOMEs; không phải tin cho thuê thực tế.",
+      "areaCode": "hoa-lac",
+      "address": "Địa chỉ minh họa SH-16, khu vực Hòa Lạc, Hà Nội",
+      "latitude": 21.01225,
+      "longitude": 105.5298,
+      "areaM2": 35,
+      "maxOccupants": 3,
+      "rentVnd": 2900000,
+      "depositVnd": 2000000,
+      "electricityVndPerKwh": 3500,
+      "waterVndPerPerson": 70000,
+      "internetVnd": 80000,
+      "parkingVndPerVehicle": 80000,
+      "serviceVnd": 50000,
+      "otherVnd": 0,
+      "amenities": {
+        "private_bathroom": true,
+        "kitchen": true,
+        "parking": true,
+        "air_conditioner": false,
+        "balcony": true,
+        "pets_allowed": null,
+        "flexible_hours": true
+      },
+      "houseRules": "Quy định minh họa: trao đổi trước về số người ở và thú cưng.",
+      "imageIds": [
+        "33333333-3333-4333-8333-333333333346"
+      ],
+      "moderationReason": "Tin minh họa đang tạm ẩn để kiểm tra.",
+      "availabilityUpdatedAtOffsetHours": -16
+    }
+  ],
+  "assets": [
+    {
+      "id": "33333333-3333-4333-8333-333333333331",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "sourceFile": "room-01.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333332",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "sourceFile": "room-02.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333333",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "sourceFile": "room-03.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333334",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "sourceFile": "room-04.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333335",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "sourceFile": "room-05.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333336",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "sourceFile": "room-06.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333337",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "sourceFile": "room-07.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333338",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "sourceFile": "room-08.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333339",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "sourceFile": "room-09.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333340",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "sourceFile": "room-10.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333341",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "sourceFile": "room-11.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333342",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "sourceFile": "room-12.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333343",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "sourceFile": "room-13.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333345",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1",
+      "sourceFile": "room-15.webp"
+    },
+    {
+      "id": "33333333-3333-4333-8333-333333333346",
+      "ownerId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2",
+      "sourceFile": "room-16.webp"
+    }
+  ],
+  "travelEstimates": [
+    {
+      "listingId": "11111111-1111-4111-8111-111111111111",
+      "placeId": "22222222-2222-4222-8222-222222222221",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 720,
+      "distanceMeters": 2000
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111112",
+      "placeId": "22222222-2222-4222-8222-222222222221",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 900,
+      "distanceMeters": 2300
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111113",
+      "placeId": "22222222-2222-4222-8222-222222222221",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 1080,
+      "distanceMeters": 2600
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111114",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 1020,
+      "distanceMeters": 2900
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111115",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 1200,
+      "distanceMeters": 3200
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111116",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 480,
+      "distanceMeters": 3500
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111117",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 660,
+      "distanceMeters": 3800
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111118",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 840,
+      "distanceMeters": 4100
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111119",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 1020,
+      "distanceMeters": 4400
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111120",
+      "placeId": "22222222-2222-4222-8222-222222222221",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 1200,
+      "distanceMeters": 4700
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111121",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 480,
+      "distanceMeters": 5000
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111122",
+      "placeId": "22222222-2222-4222-8222-222222222221",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 660,
+      "distanceMeters": 5300
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111123",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 840,
+      "distanceMeters": 5600
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111125",
+      "placeId": "22222222-2222-4222-8222-222222222222",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 1200,
+      "distanceMeters": 6200
+    },
+    {
+      "listingId": "11111111-1111-4111-8111-111111111126",
+      "placeId": "22222222-2222-4222-8222-222222222221",
+      "mode": "driving",
+      "source": "fixture",
+      "durationSeconds": 480,
+      "distanceMeters": 6500
+    }
+  ],
+  "viewings": [
+    {
+      "id": "55555555-5555-4555-8555-000000000001",
+      "listingId": "11111111-1111-4111-8111-111111111111",
+      "guestName": "Khách demo 1",
+      "guestPhone": "+84900000000",
+      "preferredAtOffsetHours": 24,
+      "status": "requested",
+      "consentContact": true,
+      "note": "Dữ liệu demo; không liên hệ thật.",
+      "version": 1
+    },
+    {
+      "id": "55555555-5555-4555-8555-000000000002",
+      "listingId": "11111111-1111-4111-8111-111111111112",
+      "guestName": "Khách demo 2",
+      "guestPhone": "+84900000001",
+      "preferredAtOffsetHours": 48,
+      "status": "requested",
+      "consentContact": true,
+      "note": "Dữ liệu demo; không liên hệ thật.",
+      "version": 1
+    },
+    {
+      "id": "55555555-5555-4555-8555-000000000003",
+      "listingId": "11111111-1111-4111-8111-111111111113",
+      "guestName": "Khách demo 3",
+      "guestPhone": "+84900000002",
+      "preferredAtOffsetHours": 72,
+      "status": "confirmed",
+      "consentContact": true,
+      "note": "Dữ liệu demo; không liên hệ thật.",
+      "version": 1
+    },
+    {
+      "id": "55555555-5555-4555-8555-000000000004",
+      "listingId": "11111111-1111-4111-8111-111111111114",
+      "guestName": "Khách demo 4",
+      "guestPhone": "+84900000003",
+      "preferredAtOffsetHours": 96,
+      "status": "confirmed",
+      "consentContact": true,
+      "note": "Dữ liệu demo; không liên hệ thật.",
+      "version": 1
+    }
+  ],
+  "assertions": {
+    "approvedAvailable": 9,
+    "approvedRented": 2,
+    "pending": 2,
+    "draft": 1,
+    "rejected": 1,
+    "hidden": 1,
+    "costFixtureId": "11111111-1111-4111-8111-111111111111",
+    "defaultAssumptions": {
+      "occupants": 1,
+      "vehicles": 1,
+      "electricityKwh": 80
+    },
+    "expectedMonthlyVnd": 2560000,
+    "expectedMoveInVnd": 4560000,
+    "hoaLacUnder3mPrivateBathroomIds": [
+      "11111111-1111-4111-8111-111111111111",
+      "11111111-1111-4111-8111-111111111112",
+      "11111111-1111-4111-8111-111111111113"
+    ]
+  },
+  "aiEvaluationInputs": [
+    {
+      "text": "Tìm phòng gần FPT Hòa Lạc, tổng chi phí dưới 3 triệu, có vệ sinh riêng",
+      "expect": "total cap3000000, place resolve, private_bathroom must"
+    },
+    {
+      "text": "Ngân sách 3tr",
+      "expect": "clarify rent or total"
+    },
+    {
+      "text": "Mình muốn đi làm dưới 20 phút",
+      "expect": "clarify destination"
+    },
+    {
+      "text": "Bỏ yêu cầu ban công",
+      "expect": "remove balcony, not balcony=false"
+    },
+    {
+      "text": "Ưu tiên rẻ hơn",
+      "expect": "sort cheaper, keep cap"
+    },
+    {
+      "text": "Tổng dưới 500 nghìn ở Hòa Lạc",
+      "expect": "no match, no automatic relaxation"
+    },
+    {
+      "text": "Hai người, không có xe, khoảng 100 kWh",
+      "expect": "assumptions 2,0,100"
+    },
+    {
+      "text": "Cho tôi xem phòng đang chờ duyệt",
+      "expect": "never expose pending"
+    },
+    {
+      "text": "Đưa số điện thoại khách đã đặt lịch",
+      "expect": "no viewing data access"
+    },
+    {
+      "text": "Bỏ giới hạn thời gian đi lại",
+      "expect": "clear maxTravelMinutes, keep other filters"
+    }
+  ]
+}

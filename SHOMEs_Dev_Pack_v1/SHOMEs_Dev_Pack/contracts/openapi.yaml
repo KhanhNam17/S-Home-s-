@@ -1,0 +1,6726 @@
+openapi: 3.0.3
+info:
+  title: S:HOMEs Demo API
+  version: 1.0.0
+  description: Implementation contract, not a running service. Guest session+CSRF
+    required on mutations; role and conditional domain rules in documents 02/04.
+servers:
+- url: /api/v1
+paths:
+  /health/live:
+    get:
+      operationId: healthLive
+      summary: Process sống
+      tags:
+      - health
+      x-role: system
+      security: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Health'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /health/ready:
+    get:
+      operationId: healthReady
+      summary: DB/storage sẵn sàng
+      tags:
+      - health
+      x-role: system
+      security: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Health'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/csrf:
+    get:
+      operationId: getCsrf
+      summary: Tạo/đọc guest session và cấp CSRF
+      tags:
+      - auth
+      x-role: public
+      security: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Csrf'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/register:
+    post:
+      operationId: registerOwner
+      summary: Đăng ký owner; không auto login
+      tags:
+      - auth
+      x-role: public
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+  /auth/login:
+    post:
+      operationId: login
+      summary: Đăng nhập, rotate session/CSRF
+      tags:
+      - auth
+      x-role: public
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/LoginResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+  /auth/me:
+    get:
+      operationId: getMe
+      summary: User hiện tại hoặc null
+      tags:
+      - auth
+      x-role: public
+      security: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Me'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /auth/logout:
+    post:
+      operationId: logout
+      summary: Hủy session
+      tags:
+      - auth
+      x-role: session
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ack'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+  /catalog/areas:
+    get:
+      operationId: getAreas
+      summary: Nhóm khu vực
+      tags:
+      - catalog
+      x-role: public
+      security: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Areas'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /catalog/amenities:
+    get:
+      operationId: getAmenities
+      summary: Tiện nghi
+      tags:
+      - catalog
+      x-role: public
+      security: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Amenities'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /catalog/places:
+    get:
+      operationId: getPlaces
+      summary: POI đã seed, tìm theo q
+      tags:
+      - catalog
+      x-role: public
+      security: []
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+          maxLength: 200
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Places'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /listings:
+    get:
+      operationId: searchListings
+      summary: Search/list/map chung predicate
+      tags:
+      - listings
+      x-role: public
+      security: []
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+          maxLength: 200
+      - name: areaCode
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: budgetType
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - rent
+          - total
+          default: rent
+      - name: minPriceVnd
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+      - name: maxPriceVnd
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+      - name: minAreaM2
+        in: query
+        required: false
+        schema:
+          type: number
+          minimum: 0
+          maximum: 1000
+          exclusiveMinimum: true
+      - name: maxAreaM2
+        in: query
+        required: false
+        schema:
+          type: number
+          minimum: 0
+          maximum: 1000
+          exclusiveMinimum: true
+      - name: amenities
+        in: query
+        required: false
+        schema:
+          type: string
+          description: Comma-separated allowlisted codes
+      - name: occupants
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 1
+      - name: vehicles
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 10
+          default: 1
+      - name: electricityKwh
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 2000
+          default: 80
+      - name: destinationId
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: maxTravelMinutes
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 180
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - newest
+          - rent_asc
+          - total_asc
+          - area_desc
+          - travel_asc
+          default: newest
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000000
+          default: 1
+      - name: pageSize
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 20
+      - name: includeMap
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: bbox
+        in: query
+        required: false
+        schema:
+          type: string
+          description: west,south,east,north
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SearchResult'
+                  meta:
+                    type: object
+                    properties:
+                      requestId:
+                        type: string
+                      generatedAt:
+                        type: string
+                        format: date-time
+                      page:
+                        type: integer
+                        minimum: 1
+                        maximum: 1000000
+                      pageSize:
+                        type: integer
+                        minimum: 1
+                        maximum: 50
+                      total:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      totalPages:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      mapTruncated:
+                        type: boolean
+                      travelIncomplete:
+                        type: boolean
+                    required:
+                    - requestId
+                    - generatedAt
+                    - page
+                    - pageSize
+                    - total
+                    - totalPages
+                    - mapTruncated
+                    - travelIncomplete
+                    additionalProperties: false
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /listings/{id}:
+    get:
+      operationId: getPublicListing
+      summary: Chi tiết approved, kể cả rented
+      tags:
+      - listings
+      x-role: public
+      security: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/PublicListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /listings/{id}/estimate:
+    post:
+      operationId: estimateListing
+      summary: Tính phí theo giả định
+      tags:
+      - listings
+      x-role: public
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CostEstimate'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostAssumptions'
+  /listings/compare:
+    post:
+      operationId: compareListings
+      summary: So sánh 2–3 IDs, giữ thứ tự
+      tags:
+      - listings
+      x-role: public
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CompareResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompareRequest'
+  /listings/{id}/travel:
+    get:
+      operationId: getListingTravel
+      summary: Thời gian đi lại đến POI
+      tags:
+      - listings
+      x-role: public
+      security: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: destinationId
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: mode
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - driving
+          default: driving
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TravelEstimate'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /media/{id}:
+    get:
+      operationId: getMedia
+      summary: Public approved hoặc owner/admin có quyền
+      tags:
+      - media
+      x-role: conditional
+      security: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Authorized image bytes
+          content:
+            image/webp:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /owner/profile:
+    get:
+      operationId: getOwnerProfile
+      summary: Hồ sơ của mình
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnerProfile'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      operationId: updateOwnerProfile
+      summary: Sửa thông tin liên hệ
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnerProfile'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfilePatch'
+  /owner/dashboard:
+    get:
+      operationId: getOwnerDashboard
+      summary: Số liệu của chủ
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnerDashboard'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /owner/listings:
+    get:
+      operationId: getOwnerListings
+      summary: Tin của chủ, mọi trạng thái
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000000
+          default: 1
+      - name: pageSize
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 20
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+          maxLength: 200
+      - name: moderationStatus
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - draft
+          - pending
+          - approved
+          - rejected
+          - hidden
+      - name: availability
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - available
+          - rented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnerListingPage'
+                  meta:
+                    type: object
+                    properties:
+                      requestId:
+                        type: string
+                      generatedAt:
+                        type: string
+                        format: date-time
+                      page:
+                        type: integer
+                        minimum: 1
+                        maximum: 1000000
+                      pageSize:
+                        type: integer
+                        minimum: 1
+                        maximum: 50
+                      total:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      totalPages:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      mapTruncated:
+                        type: boolean
+                      travelIncomplete:
+                        type: boolean
+                    required:
+                    - requestId
+                    - generatedAt
+                    - page
+                    - pageSize
+                    - total
+                    - totalPages
+                    additionalProperties: false
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      operationId: createListing
+      summary: Tạo draft, owner từ session
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnedListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateListingRequest'
+  /owner/listings/{id}:
+    get:
+      operationId: getOwnerListing
+      summary: Tin của mình
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnedListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      operationId: updateListing
+      summary: Sửa nội dung và imageIds
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnedListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateListingRequest'
+  /owner/listings/{id}/submit:
+    post:
+      operationId: submitListing
+      summary: Gửi duyệt
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnedListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionRequest'
+  /owner/listings/{id}/availability:
+    patch:
+      operationId: updateAvailability
+      summary: Đổi/xác nhận tình trạng
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnedListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvailabilityRequest'
+  /owner/uploads:
+    post:
+      operationId: uploadImage
+      summary: Một file JPEG/PNG/WebP ≤5MiB
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/MediaAsset'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '413':
+          description: Input file too large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '415':
+          description: Unsupported or invalid image
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+              additionalProperties: false
+  /owner/uploads/{id}:
+    delete:
+      operationId: deleteUnattachedImage
+      summary: Xóa ảnh chưa gắn tin
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Ack'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /viewings:
+    post:
+      operationId: createViewing
+      summary: Guest gửi yêu cầu, cần idempotency
+      tags:
+      - viewings
+      x-role: public
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Replays within 24h for same session/key/body.
+      responses:
+        '200':
+          description: Idempotent replay
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ViewingReceipt'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+          headers:
+            Idempotent-Replayed:
+              schema:
+                type: boolean
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ViewingReceipt'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewingCreate'
+  /owner/viewings:
+    get:
+      operationId: getOwnerViewings
+      summary: Lịch của các phòng mình
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000000
+          default: 1
+      - name: pageSize
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 20
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - requested
+          - confirmed
+          - cancelled
+      - name: listingId
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: from
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: to
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ViewingPage'
+                  meta:
+                    type: object
+                    properties:
+                      requestId:
+                        type: string
+                      generatedAt:
+                        type: string
+                        format: date-time
+                      page:
+                        type: integer
+                        minimum: 1
+                        maximum: 1000000
+                      pageSize:
+                        type: integer
+                        minimum: 1
+                        maximum: 50
+                      total:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      totalPages:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      mapTruncated:
+                        type: boolean
+                      travelIncomplete:
+                        type: boolean
+                    required:
+                    - requestId
+                    - generatedAt
+                    - page
+                    - pageSize
+                    - total
+                    - totalPages
+                    additionalProperties: false
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /owner/viewings/{id}:
+    patch:
+      operationId: updateViewing
+      summary: Xác nhận/hủy
+      tags:
+      - owner
+      x-role: owner
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Viewing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ViewingUpdate'
+  /admin/dashboard:
+    get:
+      operationId: getAdminDashboard
+      summary: Số liệu kiểm duyệt
+      tags:
+      - admin
+      x-role: admin
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AdminDashboard'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/listings:
+    get:
+      operationId: getAdminListings
+      summary: Tin mọi chủ
+      tags:
+      - admin
+      x-role: admin
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000000
+          default: 1
+      - name: pageSize
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 20
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+          maxLength: 200
+      - name: moderationStatus
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - draft
+          - pending
+          - approved
+          - rejected
+          - hidden
+      - name: availability
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - available
+          - rented
+      - name: ownerId
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: areaCode
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnerListingPage'
+                  meta:
+                    type: object
+                    properties:
+                      requestId:
+                        type: string
+                      generatedAt:
+                        type: string
+                        format: date-time
+                      page:
+                        type: integer
+                        minimum: 1
+                        maximum: 1000000
+                      pageSize:
+                        type: integer
+                        minimum: 1
+                        maximum: 50
+                      total:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      totalPages:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      mapTruncated:
+                        type: boolean
+                      travelIncomplete:
+                        type: boolean
+                    required:
+                    - requestId
+                    - generatedAt
+                    - page
+                    - pageSize
+                    - total
+                    - totalPages
+                    additionalProperties: false
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/listings/{id}:
+    get:
+      operationId: getAdminListing
+      summary: Chi tiết + audit
+      tags:
+      - admin
+      x-role: admin
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AdminListingDetail'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/listings/{id}/review:
+    post:
+      operationId: reviewListing
+      summary: Duyệt/từ chối pending
+      tags:
+      - admin
+      x-role: admin
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnedListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewRequest'
+  /admin/listings/{id}/hide:
+    post:
+      operationId: hideListing
+      summary: Ẩn approved
+      tags:
+      - admin
+      x-role: admin
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnedListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonVersionRequest'
+  /admin/listings/{id}/restore:
+    post:
+      operationId: restoreListing
+      summary: Khôi phục hidden
+      tags:
+      - admin
+      x-role: admin
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnedListing'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionRequest'
+  /admin/owners:
+    get:
+      operationId: getAdminOwners
+      summary: Danh sách chủ trọ
+      tags:
+      - admin
+      x-role: admin
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000000
+          default: 1
+      - name: pageSize
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 20
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+          maxLength: 200
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/OwnerPage'
+                  meta:
+                    type: object
+                    properties:
+                      requestId:
+                        type: string
+                      generatedAt:
+                        type: string
+                        format: date-time
+                      page:
+                        type: integer
+                        minimum: 1
+                        maximum: 1000000
+                      pageSize:
+                        type: integer
+                        minimum: 1
+                        maximum: 50
+                      total:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      totalPages:
+                        type: integer
+                        minimum: 0
+                        maximum: 1000000
+                      mapTruncated:
+                        type: boolean
+                      travelIncomplete:
+                        type: boolean
+                    required:
+                    - requestId
+                    - generatedAt
+                    - page
+                    - pageSize
+                    - total
+                    - totalPages
+                    additionalProperties: false
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/owners/{id}:
+    get:
+      operationId: getAdminOwner
+      summary: Hồ sơ một chủ
+      tags:
+      - admin
+      x-role: admin
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AdminOwnerDetail'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /ai/conversations:
+    post:
+      operationId: createConversation
+      summary: Tạo context cho session hiện tại
+      tags:
+      - ai
+      x-role: public
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Conversation'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+  /ai/conversations/{id}:
+    get:
+      operationId: getConversation
+      summary: Context/lịch sử của phiên này
+      tags:
+      - ai
+      x-role: session
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Conversation'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /ai/conversations/{id}/messages:
+    post:
+      operationId: sendAiMessage
+      summary: Lượt AI idempotent bằng clientTurnId
+      tags:
+      - ai
+      x-role: session
+      security:
+      - SessionCookie: []
+      - LocalSessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-CSRF-Token
+        in: header
+        required: true
+        schema:
+          type: string
+        description: From GET /auth/csrf. Anonymous session is enough on public mutations.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AiTurnResult'
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                required:
+                - data
+                - meta
+                additionalProperties: false
+        '400':
+          description: Invalid input or unknown field
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required or invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Role or CSRF rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found or not accessible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Version/state/idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Domain validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+                maximum: 86400
+        '500':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AiTurnRequest'
+components:
+  securitySchemes:
+    SessionCookie:
+      type: apiKey
+      in: cookie
+      name: __Host-shomes_sid
+      description: HTTPS opaque guest/authenticated session
+    LocalSessionCookie:
+      type: apiKey
+      in: cookie
+      name: shomes_sid
+      description: Local HTTP only
+  schemas:
+    Empty:
+      type: object
+      properties: {}
+      required: []
+      additionalProperties: false
+    Ack:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          enum:
+          - true
+      required:
+      - ok
+      additionalProperties: false
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+      required:
+      - status
+      additionalProperties: false
+    Meta:
+      type: object
+      properties:
+        requestId:
+          type: string
+        generatedAt:
+          type: string
+          format: date-time
+        page:
+          type: integer
+          minimum: 1
+          maximum: 1000000
+        pageSize:
+          type: integer
+          minimum: 1
+          maximum: 50
+        total:
+          type: integer
+          minimum: 0
+          maximum: 1000000
+        totalPages:
+          type: integer
+          minimum: 0
+          maximum: 1000000
+        mapTruncated:
+          type: boolean
+        travelIncomplete:
+          type: boolean
+      required:
+      - requestId
+      - generatedAt
+      additionalProperties: false
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            fields:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+            details:
+              type: object
+              additionalProperties: true
+          required:
+          - code
+          - message
+          additionalProperties: false
+        meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - error
+      - meta
+      additionalProperties: false
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum:
+          - owner
+          - admin
+        email:
+          type: string
+          format: email
+        displayName:
+          type: string
+      required:
+      - id
+      - role
+      - email
+      - displayName
+      additionalProperties: false
+    Csrf:
+      type: object
+      properties:
+        csrfToken:
+          type: string
+      required:
+      - csrfToken
+      additionalProperties: false
+    Me:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            role:
+              type: string
+              enum:
+              - owner
+              - admin
+            email:
+              type: string
+              format: email
+            displayName:
+              type: string
+          required:
+          - id
+          - role
+          - email
+          - displayName
+          additionalProperties: false
+          nullable: true
+      required:
+      - user
+      additionalProperties: false
+    LoginResult:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        csrfToken:
+          type: string
+      required:
+      - user
+      - csrfToken
+      additionalProperties: false
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          minLength: 10
+          maxLength: 128
+      required:
+      - email
+      - password
+      additionalProperties: false
+    RegisterRequest:
+      type: object
+      properties:
+        displayName:
+          type: string
+          minLength: 2
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          pattern: ^(0[35789][0-9]{8}|\+84[35789][0-9]{8})$
+        password:
+          type: string
+          minLength: 10
+          maxLength: 128
+      required:
+      - displayName
+      - email
+      - phone
+      - password
+      additionalProperties: false
+    Area:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        active:
+          type: boolean
+      required:
+      - code
+      - name
+      - active
+      additionalProperties: false
+    Amenity:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - private_bathroom
+          - kitchen
+          - parking
+          - air_conditioner
+          - balcony
+          - pets_allowed
+          - flexible_hours
+        label:
+          type: string
+      required:
+      - code
+      - label
+      additionalProperties: false
+    Place:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        areaCode:
+          type: string
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+        isDemo:
+          type: boolean
+      required:
+      - id
+      - name
+      - areaCode
+      - latitude
+      - longitude
+      - isDemo
+      additionalProperties: false
+    Areas:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Area'
+      required:
+      - items
+      additionalProperties: false
+    Amenities:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Amenity'
+      required:
+      - items
+      additionalProperties: false
+    Places:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Place'
+      required:
+      - items
+      additionalProperties: false
+    CostAssumptions:
+      type: object
+      properties:
+        occupants:
+          type: integer
+          minimum: 1
+          maximum: 10
+          default: 1
+        vehicles:
+          type: integer
+          minimum: 0
+          maximum: 10
+          default: 1
+        electricityKwh:
+          type: integer
+          minimum: 0
+          maximum: 2000
+          default: 80
+      required:
+      - occupants
+      - vehicles
+      - electricityKwh
+      additionalProperties: false
+    CostLine:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+          - rent
+          - electricity
+          - water
+          - internet
+          - parking
+          - service
+          - other
+        unitPriceVnd:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        quantity:
+          type: integer
+          minimum: 0
+          maximum: 2000
+        subtotalVnd:
+          type: integer
+          minimum: 0
+          maximum: 100000000000
+          nullable: true
+      required:
+      - code
+      - unitPriceVnd
+      - quantity
+      - subtotalVnd
+      additionalProperties: false
+    CostEstimate:
+      type: object
+      properties:
+        assumptions:
+          $ref: '#/components/schemas/CostAssumptions'
+        lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/CostLine'
+        knownSubtotalVnd:
+          type: integer
+          minimum: 0
+          maximum: 100000000000
+        estimatedMonthlyVnd:
+          type: integer
+          minimum: 0
+          maximum: 100000000000
+          nullable: true
+        estimatedMoveInVnd:
+          type: integer
+          minimum: 0
+          maximum: 100000000000
+          nullable: true
+        monthlyComplete:
+          type: boolean
+        moveInComplete:
+          type: boolean
+        unknownFields:
+          type: array
+          items:
+            type: string
+      required:
+      - assumptions
+      - lines
+      - knownSubtotalVnd
+      - estimatedMonthlyVnd
+      - estimatedMoveInVnd
+      - monthlyComplete
+      - moveInComplete
+      - unknownFields
+      additionalProperties: false
+    TravelEstimate:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - available
+          - unavailable
+        source:
+          type: string
+          enum:
+          - fixture
+          - osrm
+          - null
+          nullable: true
+        mode:
+          type: string
+          enum:
+          - driving
+        durationSeconds:
+          type: integer
+          minimum: 0
+          maximum: 1000000
+          nullable: true
+        distanceMeters:
+          type: integer
+          minimum: 0
+          maximum: 100000000
+          nullable: true
+        calculatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - status
+      - source
+      - mode
+      - durationSeconds
+      - distanceMeters
+      - calculatedAt
+      - expiresAt
+      additionalProperties: false
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        url:
+          type: string
+        sortOrder:
+          type: integer
+          minimum: 0
+          maximum: 9
+      required:
+      - id
+      - url
+      - sortOrder
+      additionalProperties: false
+    MediaAsset:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        url:
+          type: string
+        mime:
+          type: string
+          enum:
+          - image/webp
+        sizeBytes:
+          type: integer
+          minimum: 1
+          maximum: 100000000
+        width:
+          type: integer
+          minimum: 1
+          maximum: 8000
+        height:
+          type: integer
+          minimum: 1
+          maximum: 8000
+        status:
+          type: string
+          enum:
+          - ready
+      required:
+      - id
+      - url
+      - mime
+      - sizeBytes
+      - width
+      - height
+      - status
+      additionalProperties: false
+    AmenityValues:
+      type: object
+      properties:
+        private_bathroom:
+          type: boolean
+          nullable: true
+        kitchen:
+          type: boolean
+          nullable: true
+        parking:
+          type: boolean
+          nullable: true
+        air_conditioner:
+          type: boolean
+          nullable: true
+        balcony:
+          type: boolean
+          nullable: true
+        pets_allowed:
+          type: boolean
+          nullable: true
+        flexible_hours:
+          type: boolean
+          nullable: true
+      required: []
+      additionalProperties: false
+    CreateListingRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 10
+          maxLength: 120
+          nullable: true
+        description:
+          type: string
+          minLength: 30
+          maxLength: 5000
+          nullable: true
+        areaCode:
+          type: string
+          maxLength: 50
+          nullable: true
+        address:
+          type: string
+          minLength: 10
+          maxLength: 300
+          nullable: true
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+          nullable: true
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+          nullable: true
+        areaM2:
+          type: number
+          minimum: 0
+          maximum: 1000
+          exclusiveMinimum: true
+          nullable: true
+        maxOccupants:
+          type: integer
+          minimum: 1
+          maximum: 10
+          nullable: true
+        rentVnd:
+          type: integer
+          minimum: 1
+          maximum: 100000000
+          nullable: true
+        depositVnd:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        electricityVndPerKwh:
+          type: integer
+          minimum: 0
+          maximum: 100000
+          nullable: true
+        waterVndPerPerson:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        internetVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        parkingVndPerVehicle:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        serviceVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        otherVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        amenities:
+          $ref: '#/components/schemas/AmenityValues'
+        houseRules:
+          type: string
+          maxLength: 2000
+          nullable: true
+        imageIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 10
+          uniqueItems: true
+      required: []
+      additionalProperties: false
+    UpdateListingRequest:
+      type: object
+      properties:
+        expectedVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        title:
+          type: string
+          minLength: 10
+          maxLength: 120
+          nullable: true
+        description:
+          type: string
+          minLength: 30
+          maxLength: 5000
+          nullable: true
+        areaCode:
+          type: string
+          maxLength: 50
+          nullable: true
+        address:
+          type: string
+          minLength: 10
+          maxLength: 300
+          nullable: true
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+          nullable: true
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+          nullable: true
+        areaM2:
+          type: number
+          minimum: 0
+          maximum: 1000
+          exclusiveMinimum: true
+          nullable: true
+        maxOccupants:
+          type: integer
+          minimum: 1
+          maximum: 10
+          nullable: true
+        rentVnd:
+          type: integer
+          minimum: 1
+          maximum: 100000000
+          nullable: true
+        depositVnd:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        electricityVndPerKwh:
+          type: integer
+          minimum: 0
+          maximum: 100000
+          nullable: true
+        waterVndPerPerson:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        internetVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        parkingVndPerVehicle:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        serviceVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        otherVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        amenities:
+          $ref: '#/components/schemas/AmenityValues'
+        houseRules:
+          type: string
+          maxLength: 2000
+          nullable: true
+        imageIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 10
+          uniqueItems: true
+      required:
+      - expectedVersion
+      additionalProperties: false
+    VersionRequest:
+      type: object
+      properties:
+        expectedVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+      required:
+      - expectedVersion
+      additionalProperties: false
+    AvailabilityRequest:
+      type: object
+      properties:
+        expectedVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        availability:
+          type: string
+          enum:
+          - available
+          - rented
+      required:
+      - expectedVersion
+      - availability
+      additionalProperties: false
+    ReviewRequest:
+      type: object
+      properties:
+        expectedVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        decision:
+          type: string
+          enum:
+          - approve
+          - reject
+        reason:
+          type: string
+          minLength: 5
+          maxLength: 1000
+      required:
+      - expectedVersion
+      - decision
+      additionalProperties: false
+    ReasonVersionRequest:
+      type: object
+      properties:
+        expectedVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        reason:
+          type: string
+          minLength: 5
+          maxLength: 1000
+      required:
+      - expectedVersion
+      - reason
+      additionalProperties: false
+    OwnerPublic:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        publicPhone:
+          type: string
+      required:
+      - id
+      - displayName
+      - publicPhone
+      additionalProperties: false
+    PublicListing:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        areaCode:
+          type: string
+        areaName:
+          type: string
+        address:
+          type: string
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+        areaM2:
+          type: number
+          minimum: 0
+          maximum: 1000
+          exclusiveMinimum: true
+        maxOccupants:
+          type: integer
+          minimum: 1
+          maximum: 10
+        rentVnd:
+          type: integer
+          minimum: 1
+          maximum: 100000000
+        depositVnd:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        electricityVndPerKwh:
+          type: integer
+          minimum: 0
+          maximum: 100000
+          nullable: true
+        waterVndPerPerson:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        internetVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        parkingVndPerVehicle:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        serviceVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        otherVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        amenities:
+          $ref: '#/components/schemas/AmenityValues'
+        houseRules:
+          type: string
+          maxLength: 2000
+          nullable: true
+        availability:
+          type: string
+          enum:
+          - available
+          - rented
+        availabilityUpdatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+          minItems: 1
+          maxItems: 10
+        owner:
+          $ref: '#/components/schemas/OwnerPublic'
+        estimatedCost:
+          type: object
+          properties:
+            assumptions:
+              $ref: '#/components/schemas/CostAssumptions'
+            lines:
+              type: array
+              items:
+                $ref: '#/components/schemas/CostLine'
+            knownSubtotalVnd:
+              type: integer
+              minimum: 0
+              maximum: 100000000000
+            estimatedMonthlyVnd:
+              type: integer
+              minimum: 0
+              maximum: 100000000000
+              nullable: true
+            estimatedMoveInVnd:
+              type: integer
+              minimum: 0
+              maximum: 100000000000
+              nullable: true
+            monthlyComplete:
+              type: boolean
+            moveInComplete:
+              type: boolean
+            unknownFields:
+              type: array
+              items:
+                type: string
+          required:
+          - assumptions
+          - lines
+          - knownSubtotalVnd
+          - estimatedMonthlyVnd
+          - estimatedMoveInVnd
+          - monthlyComplete
+          - moveInComplete
+          - unknownFields
+          additionalProperties: false
+          nullable: true
+        travel:
+          type: object
+          properties:
+            status:
+              type: string
+              enum:
+              - available
+              - unavailable
+            source:
+              type: string
+              enum:
+              - fixture
+              - osrm
+              - null
+              nullable: true
+            mode:
+              type: string
+              enum:
+              - driving
+            durationSeconds:
+              type: integer
+              minimum: 0
+              maximum: 1000000
+              nullable: true
+            distanceMeters:
+              type: integer
+              minimum: 0
+              maximum: 100000000
+              nullable: true
+            calculatedAt:
+              type: string
+              format: date-time
+              nullable: true
+            expiresAt:
+              type: string
+              format: date-time
+              nullable: true
+          required:
+          - status
+          - source
+          - mode
+          - durationSeconds
+          - distanceMeters
+          - calculatedAt
+          - expiresAt
+          additionalProperties: false
+          nullable: true
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - title
+      - description
+      - areaCode
+      - areaName
+      - address
+      - latitude
+      - longitude
+      - areaM2
+      - maxOccupants
+      - rentVnd
+      - depositVnd
+      - electricityVndPerKwh
+      - waterVndPerPerson
+      - internetVnd
+      - parkingVndPerVehicle
+      - serviceVnd
+      - otherVnd
+      - amenities
+      - houseRules
+      - availability
+      - availabilityUpdatedAt
+      - images
+      - owner
+      - estimatedCost
+      - travel
+      - updatedAt
+      additionalProperties: false
+    OwnedListing:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        ownerId:
+          type: string
+          format: uuid
+        title:
+          type: string
+          minLength: 10
+          maxLength: 120
+          nullable: true
+        description:
+          type: string
+          minLength: 30
+          maxLength: 5000
+          nullable: true
+        areaCode:
+          type: string
+          maxLength: 50
+          nullable: true
+        address:
+          type: string
+          minLength: 10
+          maxLength: 300
+          nullable: true
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+          nullable: true
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+          nullable: true
+        areaM2:
+          type: number
+          minimum: 0
+          maximum: 1000
+          exclusiveMinimum: true
+          nullable: true
+        maxOccupants:
+          type: integer
+          minimum: 1
+          maximum: 10
+          nullable: true
+        rentVnd:
+          type: integer
+          minimum: 1
+          maximum: 100000000
+          nullable: true
+        depositVnd:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        electricityVndPerKwh:
+          type: integer
+          minimum: 0
+          maximum: 100000
+          nullable: true
+        waterVndPerPerson:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        internetVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        parkingVndPerVehicle:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        serviceVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        otherVnd:
+          type: integer
+          minimum: 0
+          maximum: 10000000
+          nullable: true
+        amenities:
+          $ref: '#/components/schemas/AmenityValues'
+        houseRules:
+          type: string
+          maxLength: 2000
+          nullable: true
+        imageIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 10
+          uniqueItems: true
+        moderationStatus:
+          type: string
+          enum:
+          - draft
+          - pending
+          - approved
+          - rejected
+          - hidden
+        availability:
+          type: string
+          enum:
+          - available
+          - rented
+        version:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        moderationReason:
+          type: string
+          maxLength: 1000
+          nullable: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+          maxItems: 10
+        availabilityUpdatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        submittedAt:
+          type: string
+          format: date-time
+          nullable: true
+        approvedAt:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - ownerId
+      - title
+      - description
+      - areaCode
+      - address
+      - latitude
+      - longitude
+      - areaM2
+      - maxOccupants
+      - rentVnd
+      - depositVnd
+      - electricityVndPerKwh
+      - waterVndPerPerson
+      - internetVnd
+      - parkingVndPerVehicle
+      - serviceVnd
+      - otherVnd
+      - amenities
+      - houseRules
+      - imageIds
+      - moderationStatus
+      - availability
+      - version
+      - moderationReason
+      - images
+      - availabilityUpdatedAt
+      - submittedAt
+      - approvedAt
+      - createdAt
+      - updatedAt
+      additionalProperties: false
+    OwnerListingPage:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OwnedListing'
+      required:
+      - items
+      additionalProperties: false
+    Marker:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+        rentVnd:
+          type: integer
+          minimum: 1
+          maximum: 100000000
+        estimatedMonthlyVnd:
+          type: integer
+          minimum: 0
+          maximum: 100000000000
+          nullable: true
+      required:
+      - id
+      - title
+      - latitude
+      - longitude
+      - rentVnd
+      - estimatedMonthlyVnd
+      additionalProperties: false
+    SearchResult:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicListing'
+        markers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Marker'
+      required:
+      - items
+      - markers
+      additionalProperties: false
+    CompareRequest:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 2
+          maxItems: 3
+          uniqueItems: true
+        assumptions:
+          $ref: '#/components/schemas/CostAssumptions'
+        destinationId:
+          type: string
+          format: uuid
+      required:
+      - ids
+      - assumptions
+      additionalProperties: false
+    CompareRow:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        state:
+          type: string
+          enum:
+          - available
+          - rented
+          - unavailable
+          - incompatible_assumptions
+        listing:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+            description:
+              type: string
+            areaCode:
+              type: string
+            areaName:
+              type: string
+            address:
+              type: string
+            latitude:
+              type: number
+              minimum: -90
+              maximum: 90
+            longitude:
+              type: number
+              minimum: -180
+              maximum: 180
+            areaM2:
+              type: number
+              minimum: 0
+              maximum: 1000
+              exclusiveMinimum: true
+            maxOccupants:
+              type: integer
+              minimum: 1
+              maximum: 10
+            rentVnd:
+              type: integer
+              minimum: 1
+              maximum: 100000000
+            depositVnd:
+              type: integer
+              minimum: 0
+              maximum: 1000000000
+              nullable: true
+            electricityVndPerKwh:
+              type: integer
+              minimum: 0
+              maximum: 100000
+              nullable: true
+            waterVndPerPerson:
+              type: integer
+              minimum: 0
+              maximum: 10000000
+              nullable: true
+            internetVnd:
+              type: integer
+              minimum: 0
+              maximum: 10000000
+              nullable: true
+            parkingVndPerVehicle:
+              type: integer
+              minimum: 0
+              maximum: 10000000
+              nullable: true
+            serviceVnd:
+              type: integer
+              minimum: 0
+              maximum: 10000000
+              nullable: true
+            otherVnd:
+              type: integer
+              minimum: 0
+              maximum: 10000000
+              nullable: true
+            amenities:
+              $ref: '#/components/schemas/AmenityValues'
+            houseRules:
+              type: string
+              maxLength: 2000
+              nullable: true
+            availability:
+              type: string
+              enum:
+              - available
+              - rented
+            availabilityUpdatedAt:
+              type: string
+              format: date-time
+              nullable: true
+            images:
+              type: array
+              items:
+                $ref: '#/components/schemas/Image'
+              minItems: 1
+              maxItems: 10
+            owner:
+              $ref: '#/components/schemas/OwnerPublic'
+            estimatedCost:
+              type: object
+              properties:
+                assumptions:
+                  $ref: '#/components/schemas/CostAssumptions'
+                lines:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CostLine'
+                knownSubtotalVnd:
+                  type: integer
+                  minimum: 0
+                  maximum: 100000000000
+                estimatedMonthlyVnd:
+                  type: integer
+                  minimum: 0
+                  maximum: 100000000000
+                  nullable: true
+                estimatedMoveInVnd:
+                  type: integer
+                  minimum: 0
+                  maximum: 100000000000
+                  nullable: true
+                monthlyComplete:
+                  type: boolean
+                moveInComplete:
+                  type: boolean
+                unknownFields:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - assumptions
+              - lines
+              - knownSubtotalVnd
+              - estimatedMonthlyVnd
+              - estimatedMoveInVnd
+              - monthlyComplete
+              - moveInComplete
+              - unknownFields
+              additionalProperties: false
+              nullable: true
+            travel:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                  - available
+                  - unavailable
+                source:
+                  type: string
+                  enum:
+                  - fixture
+                  - osrm
+                  - null
+                  nullable: true
+                mode:
+                  type: string
+                  enum:
+                  - driving
+                durationSeconds:
+                  type: integer
+                  minimum: 0
+                  maximum: 1000000
+                  nullable: true
+                distanceMeters:
+                  type: integer
+                  minimum: 0
+                  maximum: 100000000
+                  nullable: true
+                calculatedAt:
+                  type: string
+                  format: date-time
+                  nullable: true
+                expiresAt:
+                  type: string
+                  format: date-time
+                  nullable: true
+              required:
+              - status
+              - source
+              - mode
+              - durationSeconds
+              - distanceMeters
+              - calculatedAt
+              - expiresAt
+              additionalProperties: false
+              nullable: true
+            updatedAt:
+              type: string
+              format: date-time
+          required:
+          - id
+          - title
+          - description
+          - areaCode
+          - areaName
+          - address
+          - latitude
+          - longitude
+          - areaM2
+          - maxOccupants
+          - rentVnd
+          - depositVnd
+          - electricityVndPerKwh
+          - waterVndPerPerson
+          - internetVnd
+          - parkingVndPerVehicle
+          - serviceVnd
+          - otherVnd
+          - amenities
+          - houseRules
+          - availability
+          - availabilityUpdatedAt
+          - images
+          - owner
+          - estimatedCost
+          - travel
+          - updatedAt
+          additionalProperties: false
+          nullable: true
+        cost:
+          type: object
+          properties:
+            assumptions:
+              $ref: '#/components/schemas/CostAssumptions'
+            lines:
+              type: array
+              items:
+                $ref: '#/components/schemas/CostLine'
+            knownSubtotalVnd:
+              type: integer
+              minimum: 0
+              maximum: 100000000000
+            estimatedMonthlyVnd:
+              type: integer
+              minimum: 0
+              maximum: 100000000000
+              nullable: true
+            estimatedMoveInVnd:
+              type: integer
+              minimum: 0
+              maximum: 100000000000
+              nullable: true
+            monthlyComplete:
+              type: boolean
+            moveInComplete:
+              type: boolean
+            unknownFields:
+              type: array
+              items:
+                type: string
+          required:
+          - assumptions
+          - lines
+          - knownSubtotalVnd
+          - estimatedMonthlyVnd
+          - estimatedMoveInVnd
+          - monthlyComplete
+          - moveInComplete
+          - unknownFields
+          additionalProperties: false
+          nullable: true
+        travel:
+          type: object
+          properties:
+            status:
+              type: string
+              enum:
+              - available
+              - unavailable
+            source:
+              type: string
+              enum:
+              - fixture
+              - osrm
+              - null
+              nullable: true
+            mode:
+              type: string
+              enum:
+              - driving
+            durationSeconds:
+              type: integer
+              minimum: 0
+              maximum: 1000000
+              nullable: true
+            distanceMeters:
+              type: integer
+              minimum: 0
+              maximum: 100000000
+              nullable: true
+            calculatedAt:
+              type: string
+              format: date-time
+              nullable: true
+            expiresAt:
+              type: string
+              format: date-time
+              nullable: true
+          required:
+          - status
+          - source
+          - mode
+          - durationSeconds
+          - distanceMeters
+          - calculatedAt
+          - expiresAt
+          additionalProperties: false
+          nullable: true
+      required:
+      - id
+      - state
+      - listing
+      - cost
+      - travel
+      additionalProperties: false
+    CompareResult:
+      type: object
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompareRow'
+          minItems: 2
+          maxItems: 3
+        assumptions:
+          $ref: '#/components/schemas/CostAssumptions'
+      required:
+      - rows
+      - assumptions
+      additionalProperties: false
+    OwnerProfile:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        publicPhone:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          maxLength: 1000
+          nullable: true
+        version:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+      required:
+      - userId
+      - displayName
+      - publicPhone
+      - bio
+      - version
+      additionalProperties: false
+    ProfilePatch:
+      type: object
+      properties:
+        expectedVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        displayName:
+          type: string
+          minLength: 2
+          maxLength: 100
+        publicPhone:
+          type: string
+          pattern: ^(0[35789][0-9]{8}|\+84[35789][0-9]{8})$
+        bio:
+          type: string
+          maxLength: 1000
+          nullable: true
+      required:
+      - expectedVersion
+      additionalProperties: false
+    OwnerDashboard:
+      type: object
+      properties:
+        totalListings:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        approvedAvailable:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        pending:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        approvedRented:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        newViewingRequests:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+      required:
+      - totalListings
+      - approvedAvailable
+      - pending
+      - approvedRented
+      - newViewingRequests
+      additionalProperties: false
+    AdminDashboard:
+      type: object
+      properties:
+        owners:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        totalListings:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        pending:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        approvedAvailable:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        approvedRented:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        rejected:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        hidden:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+        draft:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+      required:
+      - owners
+      - totalListings
+      - pending
+      - approvedAvailable
+      - approvedRented
+      - rejected
+      - hidden
+      - draft
+      additionalProperties: false
+    AuditEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        action:
+          type: string
+        fromStatus:
+          type: string
+          enum:
+          - draft
+          - pending
+          - approved
+          - rejected
+          - hidden
+          - null
+          nullable: true
+        toStatus:
+          type: string
+          enum:
+          - draft
+          - pending
+          - approved
+          - rejected
+          - hidden
+          - null
+          nullable: true
+        reason:
+          type: string
+          maxLength: 1000
+          nullable: true
+        actorDisplayName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        listingVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+      required:
+      - id
+      - action
+      - fromStatus
+      - toStatus
+      - reason
+      - actorDisplayName
+      - createdAt
+      - listingVersion
+      additionalProperties: false
+    AdminListingDetail:
+      type: object
+      properties:
+        listing:
+          $ref: '#/components/schemas/OwnedListing'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditEvent'
+        owner:
+          $ref: '#/components/schemas/OwnerProfile'
+      required:
+      - listing
+      - events
+      - owner
+      additionalProperties: false
+    AdminOwnerSummary:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        displayName:
+          type: string
+        email:
+          type: string
+          format: email
+        publicPhone:
+          type: string
+          nullable: true
+        listingCount:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+      required:
+      - userId
+      - displayName
+      - email
+      - publicPhone
+      - listingCount
+      additionalProperties: false
+    OwnerPage:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminOwnerSummary'
+      required:
+      - items
+      additionalProperties: false
+    AdminOwnerDetail:
+      type: object
+      properties:
+        owner:
+          $ref: '#/components/schemas/AdminOwnerSummary'
+        stats:
+          $ref: '#/components/schemas/OwnerDashboard'
+      required:
+      - owner
+      - stats
+      additionalProperties: false
+    ViewingCreate:
+      type: object
+      properties:
+        listingId:
+          type: string
+          format: uuid
+        guestName:
+          type: string
+          minLength: 2
+          maxLength: 100
+        guestPhone:
+          type: string
+          pattern: ^(0[35789][0-9]{8}|\+84[35789][0-9]{8})$
+        preferredAt:
+          type: string
+          format: date-time
+        note:
+          type: string
+          maxLength: 1000
+        consentContact:
+          type: boolean
+          enum:
+          - true
+      required:
+      - listingId
+      - guestName
+      - guestPhone
+      - preferredAt
+      - consentContact
+      additionalProperties: false
+    ViewingReceipt:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        receiptCode:
+          type: string
+        status:
+          type: string
+          enum:
+          - requested
+        preferredAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - receiptCode
+      - status
+      - preferredAt
+      additionalProperties: false
+    ViewingUpdate:
+      type: object
+      properties:
+        expectedVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        status:
+          type: string
+          enum:
+          - confirmed
+          - cancelled
+        reason:
+          type: string
+          minLength: 5
+          maxLength: 1000
+      required:
+      - expectedVersion
+      - status
+      additionalProperties: false
+    Viewing:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        receiptCode:
+          type: string
+        listing:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+              maxLength: 120
+              nullable: true
+            availability:
+              type: string
+              enum:
+              - available
+              - rented
+            moderationStatus:
+              type: string
+              enum:
+              - draft
+              - pending
+              - approved
+              - rejected
+              - hidden
+          required:
+          - id
+          - title
+          - availability
+          - moderationStatus
+          additionalProperties: false
+        listingBookable:
+          type: boolean
+        guestName:
+          type: string
+          maxLength: 100
+          nullable: true
+        guestPhone:
+          type: string
+          maxLength: 20
+          nullable: true
+        note:
+          type: string
+          maxLength: 1000
+          nullable: true
+        preferredAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - requested
+          - confirmed
+          - cancelled
+        version:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        cancellationReason:
+          type: string
+          maxLength: 1000
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - receiptCode
+      - listing
+      - listingBookable
+      - guestName
+      - guestPhone
+      - note
+      - preferredAt
+      - status
+      - version
+      - cancellationReason
+      - createdAt
+      - updatedAt
+      additionalProperties: false
+    ViewingPage:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Viewing'
+      required:
+      - items
+      additionalProperties: false
+    NormalizedFilters:
+      type: object
+      properties:
+        budgetType:
+          type: string
+          enum:
+          - rent
+          - total
+          - null
+          nullable: true
+        maxPriceVnd:
+          type: integer
+          minimum: 0
+          maximum: 1000000000
+          nullable: true
+        areaCode:
+          type: string
+          maxLength: 50
+          nullable: true
+        destinationId:
+          type: string
+          format: uuid
+          nullable: true
+        maxTravelMinutes:
+          type: integer
+          minimum: 1
+          maximum: 180
+          nullable: true
+        mustAmenities:
+          type: array
+          items:
+            type: string
+            enum:
+            - private_bathroom
+            - kitchen
+            - parking
+            - air_conditioner
+            - balcony
+            - pets_allowed
+            - flexible_hours
+        preferredAmenities:
+          type: array
+          items:
+            type: string
+            enum:
+            - private_bathroom
+            - kitchen
+            - parking
+            - air_conditioner
+            - balcony
+            - pets_allowed
+            - flexible_hours
+        assumptions:
+          $ref: '#/components/schemas/CostAssumptions'
+        sort:
+          type: string
+          enum:
+          - newest
+          - rent_asc
+          - total_asc
+          - area_desc
+          - travel_asc
+      required:
+      - budgetType
+      - maxPriceVnd
+      - areaCode
+      - destinationId
+      - maxTravelMinutes
+      - mustAmenities
+      - preferredAmenities
+      - assumptions
+      - sort
+      additionalProperties: false
+    Proposal:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        label:
+          type: string
+        patch:
+          type: object
+          properties:
+            maxPriceVnd:
+              type: integer
+              minimum: 0
+              maximum: 1000000000
+            removeAmenity:
+              type: string
+              enum:
+              - private_bathroom
+              - kitchen
+              - parking
+              - air_conditioner
+              - balcony
+              - pets_allowed
+              - flexible_hours
+            clearTravelLimit:
+              type: boolean
+          required: []
+          additionalProperties: false
+      required:
+      - id
+      - label
+      - patch
+      additionalProperties: false
+    Recommendation:
+      type: object
+      properties:
+        listing:
+          $ref: '#/components/schemas/PublicListing'
+        reasonCodes:
+          type: array
+          items:
+            type: string
+        reasons:
+          type: array
+          items:
+            type: string
+          maxItems: 4
+      required:
+      - listing
+      - reasonCodes
+      - reasons
+      additionalProperties: false
+    AiTurnRequest:
+      type: object
+      properties:
+        clientTurnId:
+          type: string
+          format: uuid
+        expectedVersion:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        content:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        acceptedProposalId:
+          type: string
+          format: uuid
+      required:
+      - clientTurnId
+      - expectedVersion
+      - content
+      additionalProperties: false
+    AiTurnResult:
+      type: object
+      properties:
+        conversationId:
+          type: string
+          format: uuid
+        version:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        clientTurnId:
+          type: string
+          format: uuid
+        state:
+          type: string
+          enum:
+          - clarification
+          - recommendations
+          - no_match
+          - unsupported
+        aiMode:
+          type: string
+          enum:
+          - openai
+          - rule
+          - fallback
+        message:
+          type: string
+        filters:
+          $ref: '#/components/schemas/NormalizedFilters'
+        clarifications:
+          type: array
+          items:
+            type: string
+          maxItems: 2
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recommendation'
+          maxItems: 3
+        proposals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Proposal'
+          maxItems: 2
+      required:
+      - conversationId
+      - version
+      - clientTurnId
+      - state
+      - aiMode
+      - message
+      - filters
+      - clarifications
+      - recommendations
+      - proposals
+      additionalProperties: false
+    AiMessage:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum:
+          - user
+          - assistant
+        text:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        result:
+          type: object
+          properties:
+            conversationId:
+              type: string
+              format: uuid
+            version:
+              type: integer
+              minimum: 1
+              maximum: 2147483647
+            clientTurnId:
+              type: string
+              format: uuid
+            state:
+              type: string
+              enum:
+              - clarification
+              - recommendations
+              - no_match
+              - unsupported
+            aiMode:
+              type: string
+              enum:
+              - openai
+              - rule
+              - fallback
+            message:
+              type: string
+            filters:
+              $ref: '#/components/schemas/NormalizedFilters'
+            clarifications:
+              type: array
+              items:
+                type: string
+              maxItems: 2
+            recommendations:
+              type: array
+              items:
+                $ref: '#/components/schemas/Recommendation'
+              maxItems: 3
+            proposals:
+              type: array
+              items:
+                $ref: '#/components/schemas/Proposal'
+              maxItems: 2
+          required:
+          - conversationId
+          - version
+          - clientTurnId
+          - state
+          - aiMode
+          - message
+          - filters
+          - clarifications
+          - recommendations
+          - proposals
+          additionalProperties: false
+          nullable: true
+      required:
+      - id
+      - role
+      - text
+      - createdAt
+      - result
+      additionalProperties: false
+    Conversation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        version:
+          type: integer
+          minimum: 1
+          maximum: 2147483647
+        filters:
+          $ref: '#/components/schemas/NormalizedFilters'
+        pendingProposals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Proposal'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AiMessage'
+      required:
+      - id
+      - version
+      - filters
+      - pendingProposals
+      - messages
+      additionalProperties: false
